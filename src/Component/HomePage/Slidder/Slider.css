@@ -1,0 +1,31 @@
+.slide {
+  position: relative;
+  text-align: left;
+}
+
+.slider-content {
+  position: absolute;
+  top: 50%;
+  left: 150px; /* Adjust the left position as needed */
+  transform: translateY(-50%);
+  padding: 20px;
+  width: 40%; /* Adjust the width as needed */
+}
+
+h2, p {
+  margin: 0;
+}
+
+.shop-button {
+  display: inline-block;
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.shop-button:hover {
+  background-color: #0056b3;
+}

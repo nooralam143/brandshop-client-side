@@ -1,22 +1,11 @@
-import { useEffect, useState } from "react";
-// import { Link } from "react-router-dom";
-import Sidebar from "../Sidebar/Sidebar";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from "react-toastify";
+import { useEffect, useState } from 'react';
 import 'react-toastify/dist/ReactToastify.css'
-import Rating from "./Rating";
+import Sidebar from "../Sidebar/Sidebar";
+import { useLoaderData } from "react-router-dom";
 
-
-
-const AddProduct = () => {
-
-  const [clickedRating, setClickedRating] = useState(null);
-
-  //receive the clicked rating value
-  const handleRatingClick = (rating) => {
-    setClickedRating(rating);
-  };
-
-
+const UpdateProduct = () => {
+const useLoader = useLoaderData();
   const [brandNames, setBrandNames] = useState([]);
   const [selectedBrand, setSelectedBrand] = useState('');
 
@@ -34,7 +23,7 @@ const AddProduct = () => {
   }, []);
 
 
-  const handleSubmit = (e) => {
+  const UpdateSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
     const imageUrl = form.imageUrl.value;
@@ -43,12 +32,12 @@ const AddProduct = () => {
     const type = form.type.value;
     const price = parseFloat(form.price.value);
     const description = form.description.value;
-    const rating = clickedRating;
+    const rating = parseFloat(form.rating.value);
     const Product = { imageUrl, name, brand, type, price, description, rating};
     console.log('Product Data:', Product);
 
-    fetch('http://localhost:5000/products', {
-      method: 'POST',
+    fetch(`http://localhost:5000/products/${useLoader._id}`, {
+      method: 'PATCH',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(Product)
     })
@@ -61,7 +50,7 @@ const AddProduct = () => {
       .then(data => {
         console.log(data);
         if (data.insertedId) {
-          toast.success('Product added is successfully', {
+          toast.success('Product Update is successfully', {
             position: "bottom-center",
             autoClose: 5000,
             hideProgressBar: false,
@@ -71,23 +60,22 @@ const AddProduct = () => {
             progress: undefined,
             theme: "light",
           });
-          form.reset();
         }
       })
       .catch(error => {
         console.error('There was a problem with the fetch operation:', error);
       });
   }
-  return (
-
-    <div className="flex">
+    return (
+        <div>
+            <div className="flex">
       {/* Sidebar */}
       <Sidebar></Sidebar>
       {/* Main content */}
       <div className="w-6/12 bg-white p-4 mx-auto shadow-md rounded-lg">
         <div className="max-w-md mx-auto my-8">
           <h2 className="text-2xl font-semibold mb-4">Add Product</h2>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={UpdateSubmit}>
             <div className="mb-4">
               <label htmlFor="imageUrl" className="block text-sm font-medium text-gray-600">
                 Image URL
@@ -96,6 +84,7 @@ const AddProduct = () => {
                 type="url"
                 id="imageUrl"
                 name="imageUrl"
+                defaultValue={useLoader?.imageUrl}
                 className="mt-1 p-2 border border-gray-300 rounded w-full focus:ring-indigo-500 focus:border-indigo-500"
                 required
               />
@@ -108,6 +97,7 @@ const AddProduct = () => {
                 type="text"
                 id="name"
                 name="name"
+                defaultValue={useLoader?.name}
                 className="mt-1 p-2 border border-gray-300 rounded w-full focus:ring-indigo-500 focus:border-indigo-500"
                 required
               />
@@ -119,6 +109,7 @@ const AddProduct = () => {
               <select
                 id="brand"
                 name="brand"
+                defaultValue={useLoader?.brand}
                 className="mt-1 p-2 border border-gray-300 rounded w-full focus:ring-indigo-500 focus:border-indigo-500"
                 value={selectedBrand}
                 onChange={(e) => setSelectedBrand(e.target.value)}
@@ -138,6 +129,7 @@ const AddProduct = () => {
               <select
                 id="type"
                 name="type"
+                defaultValue={useLoader?.type}
                 className="mt-1 p-2 border border-gray-300 rounded w-full focus:ring-indigo-500 focus:border-indigo-500"
                 required
               >
@@ -154,6 +146,7 @@ const AddProduct = () => {
                 type="number"
                 id="price"
                 name="price"
+                defaultValue={useLoader?.price}
                 className="mt-1 p-2 border border-gray-300 rounded w-full focus:ring-indigo-500 focus:border-indigo-500"
                 required
               />
@@ -165,6 +158,7 @@ const AddProduct = () => {
               <textarea
                 id="description"
                 name="description"
+                defaultValue={useLoader?.description}
                 rows="4"
                 className="mt-1 p-2 border border-gray-300 rounded w-full focus:ring-indigo-500 focus:border-indigo-500"
                 required
@@ -174,14 +168,22 @@ const AddProduct = () => {
               <label htmlFor="rating" className="block text-sm font-medium text-gray-600">
                 Rating
               </label>
-              <Rating onRatingClick={handleRatingClick} />
-            <p>You Give the rating is: <span className="font-bold">{clickedRating}</span> Star</p>
+              <input
+                type="number"
+                id="rating"
+                name="rating"
+                defaultValue={useLoader?.rating}
+                className="mt-1 p-2 border border-gray-300 rounded w-full focus:ring-indigo-500 focus:border-indigo-500"
+                min="1"
+                max="5"
+                required
+              />
             </div>
             <button
               type="submit"
               className="bg-indigo-500 text-white py-2 px-4 rounded hover-bg-indigo-600 focus:outline-none focus:ring focus:ring-indigo-300"
             >
-              Add Product
+              Update Product
             </button>
           </form>
 
@@ -200,6 +202,8 @@ const AddProduct = () => {
         theme="light"
       />
     </div>
-  );
+        </div>
+    );
 };
-export default AddProduct;
+
+export default UpdateProduct;

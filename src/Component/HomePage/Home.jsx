@@ -1,15 +1,18 @@
-import Bannar from "../Bannar/Bannar";
+
 import OurBrand from "../OurBrand/OurBrand";
+import AllProduct from "../Product/AllProduct";
 import FreeShipping from "../Section/FreeShipping";
+import HomeSlider from "./Slidder/HomeSlider";
 
 
 
 const Home = () => {
     return (
         <div>
-            <Bannar></Bannar>
-            <OurBrand></OurBrand>
+            <HomeSlider></HomeSlider>
             <FreeShipping></FreeShipping>
+            <AllProduct></AllProduct>
+            <OurBrand></OurBrand>
         </div>
     );
 };

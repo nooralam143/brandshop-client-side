@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 import Sidebar from "../Sidebar/Sidebar";
 
 
@@ -27,7 +28,17 @@ const AddBrand = () => {
             .then(data => {
                 console.log(data);
                 if (data.insertedId) {
-                    alert("brand Add successfully");
+                    toast.success('Your Brand added is successfully', {
+                        position: "bottom-center",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+
                     form.reset();
                 }
             })
@@ -81,8 +92,21 @@ const AddBrand = () => {
                             Add Brand
                         </button>
                     </form>
+                    <ToastContainer
+                        position="bottom-center"
+                        autoClose={5000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                        theme="light"
+                    />
                 </div>
             </div>
+
         </div>
 
 
