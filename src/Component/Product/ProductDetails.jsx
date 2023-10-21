@@ -1,11 +1,55 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import Rating from './Rating';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { AuthContext } from '../Provider/AuthProvider';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
+
 
 const ProductDetails = () => {
+  const { user } = useContext(AuthContext);
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  const userEmail = user.email;
+  const productID = id;
+
+  const handleclick = () => {
+    const { imageUrl, name, brand, type, price, description, rating } = product;
+
+    const mycart = { userEmail, productID, imageUrl, name, brand, type, price, description, rating };
+    console.log(mycart);
+    fetch('http://localhost:5000/mycart', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(mycart)
+    })
+      .then(res => {
+        if (!res.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return res.json();
+      })
+      .then(data => {
+        console.log(data);
+        if (data.insertedId) {
+          toast.success('Product added in your cart', {
+            position: "bottom-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+        }
+      })
+      .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+      });
+  }
 
   useEffect(() => {
     // Fetch product data based on the id from the URL
@@ -45,11 +89,11 @@ const ProductDetails = () => {
                 <Rating productID={product._id} ratingValue={product.rating} />
               </p>
               <div>
-                <Link to="/products">
-                  <button className="w-full bg-blue-500 text-white px-4 py-2 rounded-md mt-2">
-                    Add to Cart
-                  </button>
-                </Link>
+
+                <button className="w-full bg-blue-500 text-white px-4 py-2 rounded-md mt-2" onClick={() => handleclick(product._id)}>
+                  Add to Cart
+                </button>
+
               </div>
             </div>
           </div>
@@ -57,6 +101,18 @@ const ProductDetails = () => {
       ) : (
         <p>Product not found</p>
       )}
+            <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 };
