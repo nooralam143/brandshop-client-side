@@ -90,7 +90,7 @@ const ProductDetails = () => {
                 <h2 className="text-xl font-semibold mb-2">{product.name}</h2>
                 <p className="text-gray-700"><span className="font-bold">Brand: </span>{product.brand}</p>
                 <p className="text-gray-700"><span className="font-bold">Product Type: </span>{product.type}</p>
-                <p className="text-gray-700"> <span className="font-bold">Price: </span>${product.price}</p>
+                <p className="text-gray-700"> <span className="font-bold">Price: </span>${product.price} Tk</p>
                 <div>
               <Rating productID={product._id} ratingValue={product.rating} />
               </div>

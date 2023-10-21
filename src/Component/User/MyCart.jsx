@@ -48,7 +48,7 @@ const MyCart = () => {
                 'Your Coffee has been deleted.',
                 'success'
               )
-              const remaining = products.filter(cof => cof._id !== _id);
+              const remaining = products.filter(product => product._id !== _id);
               setProducts(remaining);
             }
           })
@@ -80,14 +80,13 @@ const MyCart = () => {
                         <h2 className="text-xl font-semibold mb-2">{product.name}</h2>
                         <p className="text-gray-700">{product.brand}</p>
                         <p className="text-gray-700">{product.type}</p>
-                        <p className="text-gray-700">{product.price}</p>
+                        <p className="text-gray-700">{product.price} Tk</p>
                         
                       </div>
                       <p><Rating productID={product._id} ratingValue={product.rating} /></p>
                       
                     </div>
                     <div className="flex flex-col">
-                    
                     <Link to={`/products/${product.productID}`}><button className="w-full bg-blue-500 text-white px-4 py-2 rounded-md mt-2">Product Details</button></Link>
                     <button className=" w-1/1 bg-error text-white px-4 py-2 rounded-md mt-2" onClick={() => handleDelete(product._id)}>Delete my Cart</button>
                     </div>

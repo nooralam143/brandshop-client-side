@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Sidebar from '../Sidebar/Sidebar';
 import Rating from './Rating';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const AllProduct = () => {
   const [products, setProducts] = useState([]);
@@ -30,6 +31,37 @@ const AllProduct = () => {
     return description;
   };
 
+  const handleDelete = (_id) => {
+    console.log(_id);
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`http://localhost:5000/products/${_id}`, {
+          method: 'DELETE'
+        })
+          .then(res => res.json())
+          .then(data => {
+            console.log(data);
+            if (data.deletedCount > 0) {
+              Swal.fire(
+                'Deleted!',
+                'Your Coffee has been deleted.',
+                'success'
+              )
+              const remaining = products.filter(product => product._id !== _id);
+              setProducts(remaining);
+            }
+          })
+      }
+    })
+  }
   return (
     <div>
       <div className="flex">
@@ -53,12 +85,15 @@ const AllProduct = () => {
                       
                         <p className="text-gray-700"><span className="font-bold">Brand: </span>{product.brand}</p>
                         <p className="text-gray-700"><span className="font-bold">Product Type: </span>{product.type}</p>
-                        <p className="text-gray-700"><span className="font-bold">Price: </span>{product.price}</p>
+                        <p className="text-gray-700"><span className="font-bold">Price: </span>{product.price} TK</p>
                         <p><Rating productID={product._id} ratingValue={product.rating} /></p>
                         <p className="text-gray-700 h-40"><span className="font-bold">Description: </span>{truncateDescription(product.description)}</p>
                       </div>
                      
-                      <Link to={`/products/${product._id}`}><button className="w-full bg-blue-500 text-white px-4 py-2 rounded-md mt-2">Product Details</button></Link>
+                      <Link to={`/products/${product._id}`}><button className="w-full bg-blue-500 text-white px-4 py-2 rounded-md mt-2">Details</button></Link>
+                      <Link to={`/update-product/${product._id}`}><button className="w-full bg-success text-white px-4 py-2 rounded-md mt-2">Update</button></Link>
+              
+                      <button className=" w-1/1 bg-error text-white px-4 py-2 rounded-md mt-2" onClick={() => handleDelete(product._id)}>Delete</button>
                     </div>
                   </div>
                 </div>

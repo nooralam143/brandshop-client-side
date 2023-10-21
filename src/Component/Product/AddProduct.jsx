@@ -1,4 +1,4 @@
-import { useEffect, useState,  } from "react";
+import { useState  } from "react";
 // import { Link } from "react-router-dom";
 import Sidebar from "../Sidebar/Sidebar";
 import { ToastContainer, toast } from 'react-toastify';
@@ -15,23 +15,6 @@ const AddProduct = () => {
   const handleRatingClick = (rating) => {
     setClickedRating(rating);
   };
-
-
-  const [brandNames, setBrandNames] = useState([]);
-  const [selectedBrand, setSelectedBrand] = useState('');
-
-  // Fetch brand names from the API
-  useEffect(() => {
-    fetch('http://localhost:5000/brands')
-      .then((response) => response.json())
-      .then((data) => {
-        const brandNameList = data.map((brand) => brand.brandName);
-        setBrandNames(brandNameList);
-      })
-      .catch((error) => {
-        console.error('Error fetching brand names: ', error);
-      });
-  }, []);
 
 
   const handleSubmit = (e) => {
@@ -75,6 +58,18 @@ const AddProduct = () => {
         }
       })
       .catch(error => {
+        if (error) {
+          toast.error('Product Update Error', {
+            position: "bottom-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+        }
         console.error('There was a problem with the fetch operation:', error);
       });
   }
@@ -117,19 +112,16 @@ const AddProduct = () => {
                 Brand Name
               </label>
               <select
-                id="brand"
-                name="brand"
-                className="mt-1 p-2 border border-gray-300 rounded w-full focus:ring-indigo-500 focus:border-indigo-500"
-                value={selectedBrand}
-                onChange={(e) => setSelectedBrand(e.target.value)}
-              >
-                <option value="" disabled>Select a brand</option>
-                {brandNames.map((brandName, index) => (
-                  <option key={index} value={brandName}>
-                    {brandName}
-                  </option>
-                ))}
-              </select>
+            id="brand"
+            name="brand"
+            className="mt-1 p-2 border border-gray-300 rounded w-full focus:ring-indigo-500 focus:border-indigo-500"
+          >
+            <option value="Apple">Apple</option>
+            <option value="Samsung">Samsung</option>
+            <option value="Sony">Sony</option>
+            <option value="Google">Google</option>
+            <option value="Intel">Intel</option>
+          </select>
             </div>
             <div className="mb-4">
               <label htmlFor="type" className="block text-sm font-medium text-gray-600">
