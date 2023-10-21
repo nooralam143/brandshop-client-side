@@ -65,6 +65,14 @@ const ProductDetails = () => {
       });
   }, [id]);
 
+  // Function to truncate the description to the first 100 words
+  const truncateDescription = (description) => {
+    const words = description.split(' ');
+    if (words.length > 50) {
+      return words.slice(0, 50).join(' ') + '...'; // Add ellipsis for truncated text
+    }
+    return description;
+  };
   return (
     <div className="product-detail container mx-auto">
       {isLoading ? (
@@ -80,13 +88,16 @@ const ProductDetails = () => {
             <div className=" flex flex-col flex-shrink flex-grow h-full p-4  ">
               <div>
                 <h2 className="text-xl font-semibold mb-2">{product.name}</h2>
-                <p className="text-gray-700">{product.brand}</p>
-                <p className="text-gray-700">{product.type}</p>
-                <p className="text-gray-700">${product.price}</p>
-                <p className="text-gray-700">{product.description}</p>
+                <p className="text-gray-700"><span className="font-bold">Brand: </span>{product.brand}</p>
+                <p className="text-gray-700"><span className="font-bold">Product Type: </span>{product.type}</p>
+                <p className="text-gray-700"> <span className="font-bold">Price: </span>${product.price}</p>
+                <div>
+              <Rating productID={product._id} ratingValue={product.rating} />
+              </div>
+                <p className="text-gray-700"><span className="font-bold">Description: </span>{truncateDescription(product.description)}</p>
               </div>
               <p>
-                <Rating productID={product._id} ratingValue={product.rating} />
+              
               </p>
               <div>
 
@@ -96,7 +107,11 @@ const ProductDetails = () => {
 
               </div>
             </div>
+            
           </div>
+          <div className="mt-10 mb-10">
+            <p className="text-gray-700"><span className="font-bold text-2xl">Product Description: </span><hr></hr><br></br>{product.description}</p>
+            </div>
         </div>
       ) : (
         <p>Product not found</p>

@@ -23,8 +23,9 @@ const Rating = ({ onRatingClick, productID,ratingValue }) => {
   };
 
   return (
-    <div>
-      <div className="rating">
+    <div className="">
+      <span className="font-bold pr-2 ">Rating: </span>
+      <div className="rating ">
         <input
           type="radio"
           name={productID}

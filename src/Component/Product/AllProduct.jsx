@@ -24,8 +24,8 @@ const AllProduct = () => {
   // Function to truncate the description to the first 100 words
   const truncateDescription = (description) => {
     const words = description.split(' ');
-    if (words.length > 100) {
-      return words.slice(0, 100).join(' ') + '...'; // Add ellipsis for truncated text
+    if (words.length > 30) {
+      return words.slice(0, 30).join(' ') + '...'; // Add ellipsis for truncated text
     }
     return description;
   };
@@ -50,12 +50,14 @@ const AllProduct = () => {
                     <div className="p-4 flex-shrink flex-grow h-full flex flex-col">
                       <div className="">
                         <h2 className="text-xl font-semibold mb-2">{product.name}</h2>
-                        <p className="text-gray-700">{product.brand}</p>
-                        <p className="text-gray-700">{product.type}</p>
-                        <p className="text-gray-700">{product.price}</p>
-                        <p className="text-gray-700 h-40">{truncateDescription(product.description)}</p>
+                      
+                        <p className="text-gray-700"><span className="font-bold">Brand: </span>{product.brand}</p>
+                        <p className="text-gray-700"><span className="font-bold">Product Type: </span>{product.type}</p>
+                        <p className="text-gray-700"><span className="font-bold">Price: </span>{product.price}</p>
+                        <p><Rating productID={product._id} ratingValue={product.rating} /></p>
+                        <p className="text-gray-700 h-40"><span className="font-bold">Description: </span>{truncateDescription(product.description)}</p>
                       </div>
-                      <p><Rating productID={product._id} ratingValue={product.rating} /></p>
+                     
                       <Link to={`/products/${product._id}`}><button className="w-full bg-blue-500 text-white px-4 py-2 rounded-md mt-2">Product Details</button></Link>
                     </div>
                   </div>
