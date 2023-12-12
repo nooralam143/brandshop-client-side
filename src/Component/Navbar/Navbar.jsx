@@ -47,7 +47,7 @@ const Navbar = () => {
             user ?
               <>
                 <div className="navbar-end">
-                    <div className="px-2 py-2 text-xl font-bold">
+                    <div className="px-2 hidden lg:flex py-2 text-xl font-bold">
                       <h2>{user.displayName}</h2>
                     </div>
                 <div className="dropdown dropdown-end">
@@ -58,14 +58,9 @@ const Navbar = () => {
                     </div>
                   </label>
                   <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-                    <li className="py-2">
-                      <Link to="/profile">
-                      <button className="justify-between">
-                        Profile
-                        <span className="badge">New</span>
-                      </button>
-                      </Link>
-                    </li>
+                  <div className="px-2 flex lg:hidden  py-2 text-base font-bold">
+                      <h2>User: {user.displayName}</h2>
+                    </div>
                    
                     <li><button className=" hover:bg-primary text-white bg-pink-600 text-center" onClick={handalSignout}>Sign out</button></li>
                   </ul>

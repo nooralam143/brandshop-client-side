@@ -21,6 +21,11 @@ import ProductDetails from './Component/Product/ProductDetails';
 import AllProduct from './Component/Product/AllProduct';
 import UpdateProduct from './Component/Product/UpdateProduct';
 import OurBrand from './Component/OurBrand/OurBrand';
+import BrandHome from './Component/OurBrand/BrandHome';
+import { serverURL } from './config';
+import AddBrandSlideForm from './Component/HomePage/Slidder/AddBrandSlideForm';
+
+
 
 
 const router = createBrowserRouter([
@@ -31,7 +36,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Home></Home>,
+        element:<Home></Home>,
       },
       {
         path: '/add-product',
@@ -44,13 +49,16 @@ const router = createBrowserRouter([
       },
       {
         path: '/brands',
-        element: <OurBrand></OurBrand>,
- 
+        element: <PrivateRoute><OurBrand></OurBrand></PrivateRoute>,
+      },
+      {
+        path: '/brands/:id',
+        element: <BrandHome></BrandHome>,
       },
       {
         path: '/update-product/:id',
         element: <PrivateRoute><UpdateProduct></UpdateProduct></PrivateRoute>,
-        loader: ({params}) => fetch(`http://localhost:5000/products/${params.id}`)
+        loader: ({params}) => fetch(`${serverURL}/products/${params.id}`)
       },
       {
         path: '/products/:id',
@@ -67,6 +75,10 @@ const router = createBrowserRouter([
       {
         path: '/register',
         element: <Register></Register>,
+      },
+      {
+        path: '/add-brand-Sliders',
+        element: <PrivateRoute><AddBrandSlideForm></AddBrandSlideForm></PrivateRoute>,
       },
       {
         path: '/my-cart',

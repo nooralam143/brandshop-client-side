@@ -2,7 +2,7 @@ import { FaRocket,FaLaptopCode, FaRegCreditCard,FaMoneyBillAlt,FaTrain } from "r
 
 const FreeShipping = () => {
     return (
-        <div className="flex flex-row  justify-evenly text-xl border m-3 p-5">
+        <div className="hidden lg:flex flex-row justify-evenly text-xl border m-3 p-5">
             <div className="flex justify-center items-center">
                 <div className="p-5 text-5xl">
                     <h1><FaRocket /></h1>

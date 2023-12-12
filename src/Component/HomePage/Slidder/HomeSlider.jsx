@@ -18,27 +18,42 @@ const HomeSlider = () => {
   return (
     <div className="w-full">
       <Slider {...settings}>
-        <div className="slide">
+        <div className="slide h-auto">
           <img className="w-full" src="https://i.ibb.co/QKS4gGq/home1-slider1.jpg" alt="Product 1" />
-          <div className="slider-content">
-            <h2 className="text-5xl font-bold pb-5 text-black">New Range Of<br></br><span className="text-pink-600"> Samsung Camera</span></h2>
-            <p>Samsung EOS600D/Kiss X5</p>
-            <a href="/products" className="shop-button">
+          <div className="slider-content left-5 md:left-20 lg:left-40">
+            <h2 className="text-sm md:text-3xl lg:text-5xl font-bold mt-1 text-black leading-5">New Range Of<br></br><span className="text-pink-600 leading-5"> Samsung Camera</span></h2>
+            <p className="text-sm leading-5">Samsung EOS600D/Kiss X5</p>
+            <div>
+           <a href="/products" className="shop-button leading-5">
               Shop Now
             </a>
+           </div>
           </div>
         </div>
         <div className="slide">
           <img className="w-full" src="https://i.ibb.co/PN2gPxc/home1-slider2.jpg" alt="Product 2" />
-          <div className="slider-content">
-            <h2 className="text-5xl font-bold pb-5 text-black">Game, Consoles &<br></br><span className="text-pink-600">Much More!</span></h2>
-            <p>Sega Saturn Disc Dribve Replacement</p>
-            <a href="/products" className="shop-button">
+          <div className="slider-content left-5 md:left-20 lg:left-40 leading-5">
+            <h2 className="text-sm md:text-3xl lg:text-5xl font-bold  mt-1  text-black">Game, Consoles &<br></br><span className="text-pink-600">Much More!</span></h2>
+            <p className="text-sm">Sega Saturn Disc Dribve Replacement</p>
+           <div>
+           <a href="/products" className="shop-button text-xs">
               Shop Now
             </a>
+           </div>
           </div>
         </div>
-        {/* Add more slides as needed */}
+        <div className="slide">
+          <img className="w-full" src="https://i.ibb.co/PN2gPxc/home1-slider2.jpg" alt="Product 2" />
+          <div className="slider-content left-5 md:left-20 lg:left-40 leading-5">
+            <h2 className="text-sm md:text-3xl lg:text-5xl font-bold  mt-1  text-black">Game, Consoles &<br></br><span className="text-pink-600">Much More!</span></h2>
+            <p className="text-sm">Sega Saturn Disc Dribve Replacement</p>
+            <div>
+           <a href="/products" className="shop-button ">
+              Shop Now
+            </a>
+           </div>
+          </div>
+        </div>
       </Slider>
     </div>
   );

@@ -1,6 +1,7 @@
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import Sidebar from "../Sidebar/Sidebar";
+import { serverURL } from '../../config';
 
 
 const AddBrand = () => {
@@ -14,7 +15,7 @@ const AddBrand = () => {
         const addBrand = { brandImageURL, brandName, shortDescription };
         console.log('Brand Data:', addBrand);
 
-        fetch('http://localhost:5000/brands', {
+        fetch(`${serverURL}/brands`, {
             method: 'POST',
             headers: { 'content-type': 'application/json' },
             body: JSON.stringify(addBrand)

@@ -4,15 +4,24 @@ import Sidebar from "../Sidebar/Sidebar";
 import { useLoaderData} from "react-router-dom";
 import { useState, useEffect  } from "react";
 import Rating from "./Rating";
+import { serverURL } from "../../config";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const UpdateProduct = () => {
   const useLoader = useLoaderData();
 
   const [updateRating, setUpdateRating] = useState(null);
+  const [productDescription, setProductDescription] = useState(useLoader?.description || ''); // Set the default description
+
+  const handleDescriptionChange = (value) => {
+    setProductDescription(value);
+  };
 
   useEffect(() => {
     setUpdateRating(useLoader.rating);
-  }, [useLoader.rating]);
+    setProductDescription(useLoader?.description || ''); // Update description on useEffect if available
+  }, [useLoader.rating, useLoader.description]);
 
 
   const handleRatingClick = (rating) => {
@@ -27,12 +36,12 @@ const UpdateProduct = () => {
   const brand = form.brand.value;
   const type = form.type.value;
   const price = parseFloat(form.price.value);
-  const description = form.description.value;
+  const description = productDescription;
   const rating = updateRating;
   const Product = { imageUrl, name, brand, type, price, description, rating};
   console.log('Product Data:', Product);
 
-  fetch(`http://localhost:5000/products/${useLoader._id}`, {
+  fetch(`${serverURL}/products/${useLoader._id}`, {
     method: 'PATCH',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify(Product)
@@ -161,14 +170,10 @@ const UpdateProduct = () => {
               <label htmlFor="description" className="block text-sm font-medium text-gray-600">
                 Short Description
               </label>
-              <textarea
-                id="description"
-                name="description"
-                rows="4"
-                defaultValue={useLoader?.description}
-                className="mt-1 p-2 border border-gray-300 rounded w-full focus:ring-indigo-500 focus:border-indigo-500"
-                required
-              ></textarea>
+              <div>
+            <ReactQuill value={productDescription} onChange={handleDescriptionChange} style={{ height: "250px", width: "100%" }} />
+        </div>
+            
             </div>
             <div className="mb-4">
               <label htmlFor="rating" className="block text-sm font-medium text-gray-600">

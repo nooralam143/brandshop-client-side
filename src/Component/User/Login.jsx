@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
+import { FaGoogle } from "react-icons/fa";
 // eslint-disable-next-line no-unused-vars
 import React from 'react';
 
@@ -83,7 +84,7 @@ const Login = () => {
                             </Link>
                         </div>
                         <div className="text-center pb-8 ">
-                            <span className="btn text-blue-600" onClick={handalGoogleSignIn}>Google</span>
+                            <span className="btn text-blue-600" onClick={handalGoogleSignIn}> <FaGoogle/>Login with Google</span>
                         </div>
                     </div>
                 </div>
